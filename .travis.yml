@@ -19,13 +19,4 @@ before_script:
   - npm run build
 
 # Runs the coverage script (which runs the tests)
-script: npm run cover
-
-# Code coverage
-after_success:
-  - npm run coveralls
-  - npm run semantic-release
-
-branches:
-  except:
-    - /^v\d+\.\d+\.\d+$/
+script: npm run coveralls

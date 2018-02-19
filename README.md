@@ -1,28 +1,25 @@
-> This is a Node tsmodule boilerplate using TypeScript. 
-> Remove this block and replace all instances of `tsmodule` with your package name, as well as all instances of `jeffijoe` with your Github username.
+# bristol-stackdriver
 
-# tsmodule
-
-[![npm](https://img.shields.io/npm/v/tsmodule.svg?maxAge=1000)](https://www.npmjs.com/package/tsmodule)
-[![dependency Status](https://img.shields.io/david/jeffijoe/tsmodule.svg?maxAge=1000)](https://david-dm.org/jeffijoe/tsmodule)
-[![devDependency Status](https://img.shields.io/david/dev/jeffijoe/tsmodule.svg?maxAge=1000)](https://david-dm.org/jeffijoe/tsmodule)
-[![Build Status](https://img.shields.io/travis/jeffijoe/tsmodule.svg?maxAge=1000)](https://travis-ci.org/jeffijoe/tsmodule)
-[![Coveralls](https://img.shields.io/coveralls/jeffijoe/tsmodule.svg?maxAge=1000)](https://coveralls.io/github/jeffijoe/tsmodule)
-[![npm](https://img.shields.io/npm/dt/tsmodule.svg?maxAge=1000)](https://www.npmjs.com/package/tsmodule)
-[![npm](https://img.shields.io/npm/l/tsmodule.svg?maxAge=1000)](https://github.com/jeffijoe/tsmodule/blob/master/LICENSE.md)
+[![npm](https://img.shields.io/npm/v/bristol-stackdriver.svg?maxAge=1000)](https://www.npmjs.com/package/bristol-stackdriver)
+[![dependency Status](https://img.shields.io/david/taxfyle/bristol-stackdriver.svg?maxAge=1000)](https://david-dm.org/taxfyle/bristol-stackdriver)
+[![devDependency Status](https://img.shields.io/david/dev/taxfyle/bristol-stackdriver.svg?maxAge=1000)](https://david-dm.org/taxfyle/bristol-stackdriver)
+[![Build Status](https://img.shields.io/travis/taxfyle/bristol-stackdriver.svg?maxAge=1000)](https://travis-ci.org/taxfyle/bristol-stackdriver)
+[![Coveralls](https://img.shields.io/coveralls/taxfyle/bristol-stackdriver.svg?maxAge=1000)](https://coveralls.io/github/taxfyle/bristol-stackdriver)
+[![npm](https://img.shields.io/npm/dt/bristol-stackdriver.svg?maxAge=1000)](https://www.npmjs.com/package/bristol-stackdriver)
+[![npm](https://img.shields.io/npm/l/bristol-stackdriver.svg?maxAge=1000)](https://github.com/taxfyle/bristol-stackdriver/blob/master/LICENSE.md)
 
 # Install
 
 With `npm`:
 
 ```
-npm install tsmodule
+npm install bristol-stackdriver
 ```
 
 Or with `yarn`
 
 ```
-yarn add tsmodule
+yarn add bristol-stackdriver
 ```
 
 # Usage
@@ -31,4 +28,4 @@ Todo...
 
 # Author
 
-Jeff Hansen — [@Jeffijoe](https://twitter.com/Jeffijoe)
+Taxfyle Engineering — [@taxfyle](https://twitter.com/taxfyle)

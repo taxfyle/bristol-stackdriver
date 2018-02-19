@@ -1,6 +1,6 @@
 {
-  "name": "tsmodule",
-  "version": "0.0.0-semantic",
+  "name": "bristol-stackdriver",
+  "version": "0.0.0",
   "description": "",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -16,30 +16,32 @@
     "cover": "jest --coverage",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "precommit": "lint-staged",
-    "semantic-release":
-      "semantic-release pre && npm publish && semantic-release post"
+    "publish:pre": "npm run lint && npm run build && npm run cover",
+    "publish:post": "npm publish && git push --follow-tags",
+    "release:prerelease": "npm run publish:pre && npm version prerelease && npm run publish:post",
+    "release:patch": "npm run publish:pre && npm version patch && npm run publish:post",
+    "release:minor": "npm run publish:pre && npm version minor && npm run publish:post",
+    "release:major": "npm run publish:pre && npm version major && npm run publish:post"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jeffijoe/tsmodule.git"
+    "url": "https://github.com/taxfyle/bristol-stackdriver.git"
   },
   "files": ["lib", "LICENSE.md", "README.md"],
   "directories": {
     "lib": "lib"
   },
   "keywords": [],
-  "author": "Jeff Hansen <jeff@jeffijoe.com>",
+  "author": "Taxfyle Engineering <devops@taxfyle.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jeffijoe/tsmodule/issues"
+    "url": "https://github.com/taxfyle/bristol-stackdriver/issues"
   },
-  "homepage": "https://github.com/jeffijoe/tsmodule#readme",
+  "homepage": "https://github.com/taxfyle/bristol-stackdriver#readme",
   "dependencies": {
     "tslib": "^1.8.0"
   },
   "devDependencies": {
-    "@semantic-release/condition-codeship": "^1.1.0",
-    "@semantic-release/release-notes-generator": "^5.0.2",
     "@types/jest": "^21.1.5",
     "@types/node": "^8.0.50",
     "coveralls": "^3.0.0",
@@ -48,8 +50,6 @@
     "lint-staged": "^4.3.0",
     "prettier": "^1.8.2",
     "rimraf": "^2.6.1",
-    "semantic-release": "^8.2.0",
-    "semantic-release-conventional-commits": "^1.2.0",
     "ts-jest": "^21.2.1",
     "tslint": "^5.8.0",
     "tslint-config-prettier": "^1.6.0",
@@ -80,24 +80,5 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
-  },
-  "release": {
-    "generateNotes": "@semantic-release/release-notes-generator",
-    "analyzeCommits": {
-      "path": "semantic-release-conventional-commits",
-      "majorTypes": ["major", "breaking"],
-      "minorTypes": ["feat", "minor"],
-      "patchTypes": [
-        "chore",
-        "fix",
-        "patch",
-        "docs",
-        "test",
-        "style",
-        "refactor"
-      ],
-      "mergePattern": "/^Merge pull request #(\\d+) from (.*)$/",
-      "mergeCorrespondence": "['id', 'source']"
-    }
   }
 }
