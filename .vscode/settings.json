@@ -11,5 +11,6 @@
     "lib": true,
     "**/*.sublime-*": true,
     "node_modules": true
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

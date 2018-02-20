@@ -11,8 +11,7 @@
     "build": "rimraf lib && tsc -p tsconfig.build.json",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "lint":
-      "tslint --project tsconfig.json --fix \"src/**/*.ts\" && prettier --write \"src/**/*.ts\"",
+    "lint": "tslint --project tsconfig.json --fix \"src/**/*.ts\" && prettier --write \"src/**/*.ts\"",
     "cover": "jest --coverage",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "precommit": "lint-staged",
@@ -27,7 +26,11 @@
     "type": "git",
     "url": "https://github.com/taxfyle/bristol-stackdriver.git"
   },
-  "files": ["lib", "LICENSE.md", "README.md"],
+  "files": [
+    "lib",
+    "LICENSE.md",
+    "README.md"
+  ],
   "directories": {
     "lib": "lib"
   },
@@ -39,22 +42,32 @@
   },
   "homepage": "https://github.com/taxfyle/bristol-stackdriver#readme",
   "dependencies": {
-    "tslib": "^1.8.0"
+    "@google-cloud/logging": "^1.1.4",
+    "lodash.throttle": "^4.1.1",
+    "tslib": "^1.9.0"
   },
   "devDependencies": {
-    "@types/jest": "^21.1.5",
-    "@types/node": "^8.0.50",
+    "@types/jest": "^22.1.3",
+    "@types/lodash.throttle": "^4.1.3",
+    "@types/node": "^9.4.6",
+    "@types/prettier": "^1.10.0",
+    "@types/rimraf": "^2.0.2",
+    "@types/uuid": "^3.4.3",
+    "bristol": "^0.3.3",
     "coveralls": "^3.0.0",
     "husky": "^0.14.3",
-    "jest": "^21.2.1",
-    "lint-staged": "^4.3.0",
-    "prettier": "^1.8.2",
+    "jest": "^22.3.0",
+    "lint-staged": "^6.1.1",
+    "prettier": "^1.10.2",
     "rimraf": "^2.6.1",
-    "ts-jest": "^21.2.1",
-    "tslint": "^5.8.0",
-    "tslint-config-prettier": "^1.6.0",
+    "rxjs": "^5.5.6",
+    "ts-jest": "^22.0.4",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.8.0",
     "tslint-config-standard": "^7.0.0",
-    "typescript": "^2.6.1"
+    "typescript": "^2.7.2",
+    "uuid": "^3.2.1",
+    "yenv": "^2.1.0"
   },
   "lint-staged": {
     "*.ts": [
@@ -67,14 +80,26 @@
     "testEnvironment": "node",
     "mapCoverage": true,
     "testRegex": "(/__tests__/.*\\.(test|spec))\\.(ts|tsx|js)$",
-    "collectCoverageFrom": ["src/**/*.ts"],
-    "coveragePathIgnorePatterns": ["/node_modules/"],
-    "modulePaths": ["src"],
+    "collectCoverageFrom": [
+      "src/**/*.ts"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "__tests__"
+    ],
+    "modulePaths": [
+      "src"
+    ],
     "coverageDirectory": "<rootDir>/coverage",
     "transform": {
       "\\.(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
-    "moduleFileExtensions": ["ts", "tsx", "js"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
     "globals": {}
   },
   "prettier": {
