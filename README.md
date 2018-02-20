@@ -73,7 +73,7 @@ logger.error('Uh-oh', new Error('best check me out'))
 
 Bristol allows you to customize your severities. The Stackdriver target needs to know how to map them to Stackdriver-specific severities.
 
-You are not required to use/map them all, but those who are not mapped will be logged as `DEFAULT`.
+You are not required to use/map them all, but those which are not mapped will be logged as `DEFAULT`.
 
 ```js
 logger.setSeverities(['panic', 'ohno', 'hmm', 'cool', 'whatever'])
@@ -151,7 +151,7 @@ logger.addTarget(
 
 **You will need a Google Cloud Project ID + keyfile to run the tests!**
 
-You can either add the project ID + keyfile (JSON stringified) it to your own environment (`GCLOUD_PROJECT=your-project-id GCLOUD_CREDENTIALS="{\"type\": \"...\"}"`), or you can create an `env.yaml` in the repository root, and add the following:
+You can either add the project ID + keyfile (JSON stringified) to your own environment (`GCLOUD_PROJECT=your-project-id GCLOUD_CREDENTIALS="{\"type\": \"...\"}"`), or you can create an `env.yaml` in the repository root, and add the following:
 
 ```yaml
 test:
