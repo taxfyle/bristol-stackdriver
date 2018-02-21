@@ -1,6 +1,11 @@
 import { FormatResult } from './types'
+import { collectHttpContext } from '.'
 
-const LABELS_KEY = 'sd:labels'
+export const SD_LABELS_KEY = 'sd:labels'
+export const SD_HTTP_CONTEXT_KEY = 'sd:httpContext'
+export const SD_HTTP_REQ_KEY = 'sd:req'
+export const SD_HTTP_RES_KEY = 'sd:res'
+export const SD_USER_KEY = 'sd:user'
 
 /**
  * Bristol formatter for Stackdriver.
@@ -28,12 +33,25 @@ export function formatter() {
       // Last element is the aggregate obbject.
       if (idx === len - 1) {
         const { file, line, ...rest } = element
-        // If an object with key `sd:labels` was logged,
-        // assume it to be an object with labels.
-        const sdLabels = rest[LABELS_KEY]
-        delete rest[LABELS_KEY]
+
+        // `sd:*` keys are special.
+        const sdLabels = rest[SD_LABELS_KEY]
+        delete rest[SD_LABELS_KEY]
+        const sdHttpContext = rest[SD_HTTP_CONTEXT_KEY]
+        delete rest[SD_HTTP_CONTEXT_KEY]
+        const sdUser = rest[SD_USER_KEY]
+        delete rest[SD_USER_KEY]
+        const sdReq = rest[SD_HTTP_REQ_KEY]
+        delete rest[SD_HTTP_REQ_KEY]
+        const sdRes = rest[SD_HTTP_RES_KEY]
+        delete rest[SD_HTTP_RES_KEY]
+
         Object.assign(payload, rest)
         Object.assign(labels, sdLabels)
+        result.httpContext = sdHttpContext
+          ? sdHttpContext
+          : sdReq && sdRes ? collectHttpContext(sdReq, sdRes) : undefined
+        result.user = sdUser
         result.file = file
         result.line = line
       } else if (element === undefined) {
@@ -49,7 +67,12 @@ export function formatter() {
         }
       }
     }
-    result.message = msgElements.join(' ')
+    const message = msgElements.join(' ')
+    // In order for automatic error reporting to work,
+    // the message must contain the error stack.
+    result.message = result.error
+      ? message ? `${message}\n${result.error.stack}` : result.error.stack
+      : message
     return result
   }
 }

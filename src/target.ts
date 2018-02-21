@@ -9,6 +9,7 @@ import {
 
 // Logging library apparently not typed. ¯\_(ツ)_/¯
 const Logging = require('@google-cloud/logging')
+const destroyCircular = require('destroy-circular')
 
 // Default monitored resource.
 // https://cloud.google.com/logging/docs/reference/v2/rest/v2/MonitoredResource
@@ -72,18 +73,19 @@ export function target<S extends string = BristolDefaultSeverity>(
         ...formatResult.labels
       }
     }
-    const data = {
+    const data = destroyCircular({
       ...formatResult.payload,
+      eventTime: date.toISOString(),
       // By passing in a Service Context, Stackdriver Logging will automatically
       // report errors to Stackdriver Error Reporting. This happens server-side.
       serviceContext: opts.serviceContext,
-      // In order for the above to work, the message must contain the error stack.
-      message: formatResult.error
-        ? formatResult.message
-          ? `${formatResult.message}\n${formatResult.error.stack}`
-          : formatResult.error.stack
-        : formatResult.message
-    }
+      message: formatResult.message,
+      context: {
+        ...formatResult.payload.context,
+        httpRequest: formatResult.httpContext,
+        user: formatResult.user
+      }
+    })
     const entry = log.entry(meta, data)
     buffer.push(entry)
     flush()

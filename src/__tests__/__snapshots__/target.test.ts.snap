@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`target includes sd:httpContext and sd:user 1`] = `
+Object {
+  "httpRequest": Object {
+    "method": "GET",
+    "remoteIp": "::ffff:127.0.0.1",
+    "responseStatusCode": 200,
+    "url": "/IAmTheDerg/TheBigBadDerg",
+    "userAgent": "axios/0.18.0",
+  },
+  "user": "user1",
+}
+`;
+
+exports[`target includes sd:httpContext and sd:user 2`] = `
+Object {
+  "httpRequest": Object {
+    "method": "POST",
+    "remoteIp": "1.2.3.4",
+    "responseStatusCode": 200,
+    "url": "/WhatDoWeSayToDeath",
+    "userAgent": "austin powers",
+  },
+  "user": "user2",
+}
+`;

@@ -111,6 +111,8 @@ export interface FormatResult {
   message?: string
   payload: any
   labels: StackdriverLabels
+  httpContext?: StackdriverHttpContext
+  user?: string
   file: string
   line: string
 }
@@ -139,4 +141,16 @@ export interface LogRecordMetadata {
 export interface SourceLocation {
   file: string
   line: string
+}
+
+/**
+ * Http Context payload for Stackdriver.
+ */
+export interface StackdriverHttpContext {
+  method: string
+  url: string
+  userAgent: string
+  referrer: string
+  responseStatusCode: number
+  remoteIp: string
 }

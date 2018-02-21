@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`http context collector collects the correct context 1`] = `
+Array [
+  Object {
+    "method": "GET",
+    "referrer": undefined,
+    "remoteIp": "::ffff:127.0.0.1",
+    "responseStatusCode": 200,
+    "url": "/IAmTheDerg/TheBigBadDerg",
+    "userAgent": "axios/0.18.0",
+  },
+  Object {
+    "method": "POST",
+    "referrer": "ya mum",
+    "remoteIp": "1.2.3.4",
+    "responseStatusCode": 200,
+    "url": "/WhatDoWeSayToDeath",
+    "userAgent": "austin powers",
+  },
+]
+`;

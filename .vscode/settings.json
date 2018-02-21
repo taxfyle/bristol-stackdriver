@@ -10,7 +10,7 @@
     ".idea": true,
     "lib": true,
     "**/*.sublime-*": true,
-    "node_modules": true
+    "node_modules": false
   },
   "typescript.tsdk": "node_modules/typescript/lib"
 }

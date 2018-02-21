@@ -134,6 +134,47 @@ logger.error(
 )
 ```
 
+### Attaching `user` and `httpContext` for Error Reporting
+
+Error Reporting can show request/response information about an error, as well as the ID of the user.
+
+In order for the transport to submit that info, you need to attach it using `sd:req`, `sd:res` (or `sd:httpContext`) and `sd:user`.
+
+```js
+http.createServer((req, res) => {
+  res.statusCode = 400
+  logger.error(new Error('Go away'), {
+    'sd:req': req,
+    'sd:res': res,
+    'sd:user': req.user.id
+  })
+})
+```
+
+Alternatively, if you want to specify the [HTTP context][http-context] yourself.
+
+```js
+http.createServer((req, res) => {
+  res.statusCode = 400
+  logger.error(new Error('Go away'), {
+    'sd:httpContext': {
+      method: req.method
+      /* ... */
+    }
+  })
+})
+```
+
+**In fact**, using `sd:req` and `sd:res` is the exact same as doing:
+
+```js
+import { collectHttpContext } from 'bristol-stackdriver'
+
+logger.error(new Error('Go away'), {
+  'sd:httpContext': collectHttpContext(req, res)
+})
+```
+
 ## Callbacks when flushing to Stackdriver (fails)
 
 If you want to (for whatever reason) know when the target flushes to Stackdriver—or when it fails—you can attach some callbacks.
@@ -172,3 +213,4 @@ Taxfyle Engineering — [@taxfyle](https://twitter.com/taxfyle)
 [stackdriver]: https://cloud.google.com/logging/
 [stackdriver-errors]: https://cloud.google.com/error-reporting
 [bristol]: https://github.com/TomFrost/bristol
+[http-context]: https://cloud.google.com/error-reporting/reference/rest/v1beta1/ErrorContext#HttpRequestContext

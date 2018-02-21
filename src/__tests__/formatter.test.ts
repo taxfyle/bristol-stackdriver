@@ -46,7 +46,7 @@ describe('formatter', () => {
     )
     expect(result.error).toBeInstanceOf(Error)
     expect(result.error!.message).toBe('sup')
-    expect(result.message).toBe('Hello')
+    expect(result.message).toBe('Hello\n' + result.error!.stack)
   })
 
   async function getFormatResult(...args: any[]) {
