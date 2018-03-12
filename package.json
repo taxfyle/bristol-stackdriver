@@ -1,6 +1,6 @@
 {
   "name": "bristol-stackdriver",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -11,27 +11,26 @@
     "build": "rimraf lib && tsc -p tsconfig.build.json",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "lint":
-      "tslint --project tsconfig.json --fix \"src/**/*.ts\" && prettier --write \"src/**/*.ts\"",
+    "lint": "tslint --project tsconfig.json --fix \"src/**/*.ts\" && prettier --write \"src/**/*.ts\"",
     "cover": "jest --coverage",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "precommit": "lint-staged",
     "publish:pre": "npm run lint && npm run build && npm run cover",
     "publish:post": "npm publish && git push --follow-tags",
-    "release:prerelease":
-      "npm run publish:pre && npm version prerelease && npm run publish:post",
-    "release:patch":
-      "npm run publish:pre && npm version patch && npm run publish:post",
-    "release:minor":
-      "npm run publish:pre && npm version minor && npm run publish:post",
-    "release:major":
-      "npm run publish:pre && npm version major && npm run publish:post"
+    "release:prerelease": "npm run publish:pre && npm version prerelease && npm run publish:post",
+    "release:patch": "npm run publish:pre && npm version patch && npm run publish:post",
+    "release:minor": "npm run publish:pre && npm version minor && npm run publish:post",
+    "release:major": "npm run publish:pre && npm version major && npm run publish:post"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/taxfyle/bristol-stackdriver.git"
   },
-  "files": ["lib", "LICENSE.md", "README.md"],
+  "files": [
+    "lib",
+    "LICENSE.md",
+    "README.md"
+  ],
   "directories": {
     "lib": "lib"
   },
@@ -82,14 +81,26 @@
   "jest": {
     "testEnvironment": "node",
     "testRegex": "(/__tests__/.*\\.(test|spec))\\.(ts|tsx|js)$",
-    "collectCoverageFrom": ["src/**/*.ts"],
-    "coveragePathIgnorePatterns": ["/node_modules/", "__tests__"],
-    "modulePaths": ["src"],
+    "collectCoverageFrom": [
+      "src/**/*.ts"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "__tests__"
+    ],
+    "modulePaths": [
+      "src"
+    ],
     "coverageDirectory": "<rootDir>/coverage",
     "transform": {
       "\\.(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
-    "moduleFileExtensions": ["ts", "tsx", "js", "json"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
     "globals": {}
   },
   "prettier": {
