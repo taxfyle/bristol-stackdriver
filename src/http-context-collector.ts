@@ -10,11 +10,12 @@ export function collectHttpContext(
   req: IncomingMessage,
   res: ServerResponse
 ): StackdriverHttpContext {
+  const headers = req.headers || /* istanbul ignore next */ {}
   return {
     method: req.method!,
     url: req.url!,
-    userAgent: req.headers['user-agent'] as string,
-    referrer: req.headers['referer'] as string,
+    userAgent: headers['user-agent'] as string,
+    referrer: headers['referer'] as string,
     responseStatusCode: res.statusCode,
     remoteIp: getRemoteIp(req)
   }
@@ -25,9 +26,12 @@ export function collectHttpContext(
  * @param req
  */
 function getRemoteIp(req: IncomingMessage): string {
-  const header = req.headers['x-forwarded-for']
-  if (typeof header !== 'undefined') {
-    return header as string
+  /* istanbul ignore else */
+  if (req.headers) {
+    const header = req.headers['x-forwarded-for']
+    if (typeof header !== 'undefined') {
+      return header as string
+    }
   }
 
   /* istanbul ignore else */
