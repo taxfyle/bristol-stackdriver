@@ -18,7 +18,7 @@ import {
   StackdriverTargetOptions
 } from '../'
 
-jest.setTimeout(30000)
+jest.setTimeout(60000)
 
 const { Bristol } = require('bristol')
 const { Logging } = require('@google-cloud/logging')
@@ -191,7 +191,7 @@ describe('target', () => {
     const predicate = (e: any) => e.data.message.includes(uid)
     // We can only do 1 List call per second, so make sure we don't do it that often.
     // So a little explanation on this.
-    // First, we wait 3 seconds, then request entries (newest first).
+    // First, we wait a few seconds, then request entries (newest first).
     // We collect all entries fetched using `scan`, and filter the ones
     // that contains the uid (`map`).
     // `first` will emit all entries once we confirm that we have at least `requiredLength`
@@ -199,7 +199,7 @@ describe('target', () => {
     // The `repeat` will repeat the source timer (3 seconds) which will call the API
     // again, and it will keep repeating until `first` emits an item, completing the observable.
     // `toPromise` returns a promise that resolves when that happens.
-    return timer(3000)
+    return timer(5000)
       .pipe(
         mergeMap(() =>
           loggingClient
