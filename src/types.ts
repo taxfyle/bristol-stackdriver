@@ -115,6 +115,7 @@ export interface FormatResult {
   user?: string
   file: string
   line: string
+  severity: string
 }
 
 /**
