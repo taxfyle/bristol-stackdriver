@@ -8,7 +8,7 @@ import {
 } from './types'
 
 // Logging library apparently not typed. ¯\_(ツ)_/¯
-const Logging = require('@google-cloud/logging')
+const { Logging } = require('@google-cloud/logging')
 const destroyCircular = require('destroy-circular')
 
 // Default monitored resource.

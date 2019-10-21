@@ -18,7 +18,7 @@ describe('http context collector', () => {
       .listen()
 
     try {
-      const addr = server.address()
+      const addr = server.address() as any
       const url = `http://127.0.0.1:${addr.port}`
       const client = axios.create({ baseURL: url })
       await client.get('/IAmTheDerg/TheBigBadDerg')

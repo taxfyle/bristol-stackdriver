@@ -1,6 +1,7 @@
 import * as http from 'http'
 import axios from 'axios'
-import { ReplaySubject, Observable } from 'rxjs'
+import { ReplaySubject, Observable, timer } from 'rxjs'
+import { first, mergeMap, repeat, scan, map } from 'rxjs/operators'
 import { getEnv } from './env'
 import { v4 } from 'uuid'
 import {
@@ -17,10 +18,10 @@ import {
   StackdriverTargetOptions
 } from '../'
 
-jest.setTimeout(30000)
+jest.setTimeout(60000)
 
 const { Bristol } = require('bristol')
-const Logging = require('@google-cloud/logging')
+const { Logging } = require('@google-cloud/logging')
 
 const logName = 'test__bristol-stackdriver'
 const env = getEnv()
@@ -78,7 +79,7 @@ describe('target', () => {
       logger.bye(errorToReport)
     ]
 
-    await flush$.first().toPromise()
+    await flush$.pipe(first()).toPromise()
 
     const logEntries = await getLogsWithUid(uid, calls.length)
 
@@ -148,7 +149,7 @@ describe('target', () => {
       .listen()
 
     try {
-      const addr = server.address()
+      const addr = server.address() as any
       const url = `http://127.0.0.1:${addr.port}`
       const client = axios.create({ baseURL: url })
       await client.get('/IAmTheDerg/TheBigBadDerg')
@@ -163,7 +164,7 @@ describe('target', () => {
           }
         }
       )
-      await flush$.first().toPromise()
+      await flush$.pipe(first()).toPromise()
 
       const logEntries = await getLogsWithUid(uid, calls.length)
 
@@ -190,7 +191,7 @@ describe('target', () => {
     const predicate = (e: any) => e.data.message.includes(uid)
     // We can only do 1 List call per second, so make sure we don't do it that often.
     // So a little explanation on this.
-    // First, we wait 3 seconds, then request entries (newest first).
+    // First, we wait a few seconds, then request entries (newest first).
     // We collect all entries fetched using `scan`, and filter the ones
     // that contains the uid (`map`).
     // `first` will emit all entries once we confirm that we have at least `requiredLength`
@@ -198,20 +199,22 @@ describe('target', () => {
     // The `repeat` will repeat the source timer (3 seconds) which will call the API
     // again, and it will keep repeating until `first` emits an item, completing the observable.
     // `toPromise` returns a promise that resolves when that happens.
-    return Observable.timer(3000)
-      .mergeMap(() =>
-        loggingClient
-          .log(logName)
-          .getEntries({
-            pageSize: 1000,
-            orderBy: 'timestamp desc'
-          })
-          .then(([entries]: any) => entries)
+    return timer(5000)
+      .pipe(
+        mergeMap(() =>
+          loggingClient
+            .log(logName)
+            .getEntries({
+              pageSize: 1000,
+              orderBy: 'timestamp desc'
+            })
+            .then(([entries]: any) => entries)
+        ),
+        repeat(),
+        scan((acc: any, next: any) => [...acc, ...next], []),
+        map((entries: any) => entries.filter(predicate)),
+        first((entries: any) => entries.length >= requiredLength)
       )
-      .repeat()
-      .scan((acc: any, next: any) => [...acc, ...next], [])
-      .map((entries: any) => entries.filter(predicate))
-      .first((entries: any) => entries.length >= requiredLength)
       .toPromise()
   }
 
