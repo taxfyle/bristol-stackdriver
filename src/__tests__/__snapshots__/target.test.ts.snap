@@ -7,7 +7,7 @@ Object {
     "remoteIp": "::ffff:127.0.0.1",
     "responseStatusCode": 200,
     "url": "/IAmTheDerg/TheBigBadDerg",
-    "userAgent": "axios/0.18.0",
+    "userAgent": "axios/0.19.0",
   },
   "user": "user1",
 }
