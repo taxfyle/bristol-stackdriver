@@ -51,7 +51,9 @@ export function formatter() {
         Object.assign(labels, sdLabels)
         result.httpContext = sdHttpContext
           ? sdHttpContext
-          : sdReq && sdRes ? collectHttpContext(sdReq, sdRes) : undefined
+          : sdReq && sdRes
+          ? collectHttpContext(sdReq, sdRes)
+          : undefined
         result.user = sdUser
         result.file = file
         result.line = line
@@ -72,7 +74,9 @@ export function formatter() {
     // In order for automatic error reporting to work,
     // the message must contain the error stack.
     result.message = result.error
-      ? message ? `${message}\n${result.error.stack}` : result.error.stack
+      ? message
+        ? `${message}\n${result.error.stack}`
+        : result.error.stack
       : message
     return result
   }
