@@ -23,7 +23,8 @@ export function formatter() {
       payload,
       labels,
       file: '',
-      line: ''
+      line: '',
+      severity: severity
     }
 
     let msgElements: Array<string> = []
