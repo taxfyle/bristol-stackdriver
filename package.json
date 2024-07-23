@@ -42,7 +42,6 @@
   },
   "homepage": "https://github.com/taxfyle/bristol-stackdriver#readme",
   "dependencies": {
-    "@google-cloud/logging": "^5.5.2",
     "destroy-circular": "^1.1.0",
     "lodash.throttle": "^4.1.1",
     "tslib": "^1.9.0"
