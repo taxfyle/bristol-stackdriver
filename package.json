@@ -1,6 +1,6 @@
 {
   "name": "bristol-stackdriver",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -42,7 +42,6 @@
   },
   "homepage": "https://github.com/taxfyle/bristol-stackdriver#readme",
   "dependencies": {
-    "@google-cloud/logging": "^5.5.2",
     "destroy-circular": "^1.1.0",
     "lodash.throttle": "^4.1.1",
     "tslib": "^1.9.0"
