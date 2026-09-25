@@ -1,13 +1,13 @@
 import * as http from 'http'
 import axios from 'axios'
 import { collectHttpContext } from '../http-context-collector'
-import { StackdriverHttpContext } from '..'
+import { StackdriverHttpRequest } from '..'
 
 jest.setTimeout(20000)
 
 describe('http context collector', () => {
   it('collects the correct context', async () => {
-    const contexts: Array<StackdriverHttpContext> = []
+    const contexts: Array<StackdriverHttpRequest> = []
     const server = http
       .createServer((req, res) => {
         res.statusCode = 200

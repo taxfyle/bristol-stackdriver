@@ -16,8 +16,10 @@ describe('formatter', () => {
       /abc/i
     )
 
-    expect(result.file).toContain('__tests__')
-    expect(result.line).toMatch(/\d*/)
+    expect(result['logging.googleapis.com/sourceLocation'].file).toContain(
+      '__tests__'
+    )
+    expect(result['logging.googleapis.com/sourceLocation'].line).toMatch(/\d*/)
     expect(result.payload).toEqual({ a: 1, b: 2 })
     expect(result.message).toBe('Hello world 123 <undefined>')
   })
@@ -30,7 +32,20 @@ describe('formatter', () => {
     })
 
     expect(result.payload).toEqual({ a: 1, b: 2 })
-    expect(result.labels).toEqual({ label: 'value' })
+    expect(result['logging.googleapis.com/labels']).toEqual({ label: 'value' })
+  })
+
+  it('special-cases sd:trace', async () => {
+    const result = await getFormatResult('info', 'Hello', {
+      a: 1,
+      b: 2,
+      'sd:traceId': 'trace-1',
+      'sd:spanId': 'span-1'
+    })
+
+    expect(result['logging.googleapis.com/trace']).toBe('trace-1')
+    expect(result['logging.googleapis.com/spanId']).toBe('span-1')
+    expect(result['logging.googleapis.com/trace_sampled']).toBe(false)
   })
 
   it('special-cases errors', async () => {

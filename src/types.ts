@@ -110,12 +110,19 @@ export interface FormatResult {
   error?: Error
   message?: string
   payload: any
-  labels: StackdriverLabels
-  httpContext?: StackdriverHttpContext
+  httpRequest?: StackdriverHttpRequest
   user?: string
+  severity: string
+  'logging.googleapis.com/trace'?: string
+  'logging.googleapis.com/spanId'?: string
+  'logging.googleapis.com/trace_sampled'?: boolean
+  'logging.googleapis.com/sourceLocation': LogSourceLocation
+  'logging.googleapis.com/labels': StackdriverLabels
+}
+
+export interface LogSourceLocation {
   file: string
   line: string
-  severity: string
 }
 
 /**
@@ -145,13 +152,13 @@ export interface SourceLocation {
 }
 
 /**
- * Http Context payload for Stackdriver.
+ * Http request payload for Stackdriver.
  */
-export interface StackdriverHttpContext {
-  method: string
-  url: string
+export interface StackdriverHttpRequest {
+  requestMethod: string
+  requestUrl: string
   userAgent: string
-  referrer: string
-  responseStatusCode: number
+  referer: string
+  status: number
   remoteIp: string
 }

@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'http'
-import { StackdriverHttpContext } from '.'
+import { StackdriverHttpRequest } from '.'
 
 /**
  * Collects HTTP context info from Node's HTTP Request and Response objects.
@@ -9,14 +9,14 @@ import { StackdriverHttpContext } from '.'
 export function collectHttpContext(
   req: IncomingMessage,
   res: ServerResponse
-): StackdriverHttpContext {
+): StackdriverHttpRequest {
   const headers = req.headers || /* istanbul ignore next */ {}
   return {
-    method: req.method!,
-    url: req.url!,
+    requestMethod: req.method!,
+    requestUrl: req.url!,
     userAgent: headers['user-agent'] as string,
-    referrer: headers['referer'] as string,
-    responseStatusCode: res.statusCode,
+    referer: headers['referer'] as string,
+    status: res.statusCode,
     remoteIp: getRemoteIp(req)
   }
 }
