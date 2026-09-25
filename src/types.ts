@@ -110,7 +110,7 @@ export interface FormatResult {
   error?: Error
   message?: string
   payload: any
-  httpContext?: StackdriverHttpContext
+  httpRequest?: StackdriverHttpRequest
   user?: string
   severity: string
   'logging.googleapis.com/trace'?: string
@@ -152,13 +152,13 @@ export interface SourceLocation {
 }
 
 /**
- * Http Context payload for Stackdriver.
+ * Http request payload for Stackdriver.
  */
-export interface StackdriverHttpContext {
-  method: string
-  url: string
+export interface StackdriverHttpRequest {
+  requestMethod: string
+  requestUrl: string
   userAgent: string
-  referrer: string
-  responseStatusCode: number
+  referer: string
+  status: number
   remoteIp: string
 }

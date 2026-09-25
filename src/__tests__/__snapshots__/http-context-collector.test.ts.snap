@@ -3,19 +3,19 @@
 exports[`http context collector collects the correct context 1`] = `
 Array [
   Object {
-    "method": "GET",
-    "referrer": undefined,
+    "referer": undefined,
     "remoteIp": "::ffff:127.0.0.1",
-    "responseStatusCode": 200,
-    "url": "/IAmTheDerg/TheBigBadDerg",
+    "requestMethod": "GET",
+    "requestUrl": "/IAmTheDerg/TheBigBadDerg",
+    "status": 200,
     "userAgent": "axios/0.19.0",
   },
   Object {
-    "method": "POST",
-    "referrer": "ya mum",
+    "referer": "ya mum",
     "remoteIp": "1.2.3.4",
-    "responseStatusCode": 200,
-    "url": "/WhatDoWeSayToDeath",
+    "requestMethod": "POST",
+    "requestUrl": "/WhatDoWeSayToDeath",
+    "status": 200,
     "userAgent": "austin powers",
   },
 ]

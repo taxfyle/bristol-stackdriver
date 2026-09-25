@@ -2,13 +2,19 @@ import { FormatResult } from './types'
 import { collectHttpContext } from '.'
 
 export const SD_LABELS_KEY = 'sd:labels'
-export const SD_HTTP_CONTEXT_KEY = 'sd:httpContext'
+export const SD_HTTP_REQUEST_KEY = 'sd:httpRequest'
 export const SD_HTTP_REQ_KEY = 'sd:req'
 export const SD_HTTP_RES_KEY = 'sd:res'
 export const SD_USER_KEY = 'sd:user'
 export const SD_TRACE_ID_KEY = 'sd:traceId'
 export const SD_SPAN_ID_KEY = 'sd:spanId'
 export const SD_TRACE_SAMPLED_KEY = 'sd:traceSampled'
+
+const SD_LEGACY_HTTP_CONTEXT_KEY = 'sd:httpContext'
+/**
+ * @deprecated Use `SD_HTTP_REQUEST_KEY` instead.
+ */
+export const SD_HTTP_CONTEXT_KEY = SD_LEGACY_HTTP_CONTEXT_KEY
 
 /**
  * Bristol formatter for Stackdriver.
@@ -42,8 +48,10 @@ export function formatter() {
         // `sd:*` keys are special.
         const sdLabels = rest[SD_LABELS_KEY]
         delete rest[SD_LABELS_KEY]
-        const sdHttpContext = rest[SD_HTTP_CONTEXT_KEY]
-        delete rest[SD_HTTP_CONTEXT_KEY]
+        const sdHttpRequest =
+          rest[SD_LEGACY_HTTP_CONTEXT_KEY] || rest[SD_HTTP_REQUEST_KEY]
+        delete rest[SD_LEGACY_HTTP_CONTEXT_KEY]
+        delete rest[SD_HTTP_REQUEST_KEY]
         const sdUser = rest[SD_USER_KEY]
         delete rest[SD_USER_KEY]
         const sdReq = rest[SD_HTTP_REQ_KEY]
@@ -58,8 +66,8 @@ export function formatter() {
         delete rest[SD_TRACE_SAMPLED_KEY]
 
         Object.assign(payload, rest)
-        result.httpContext = sdHttpContext
-          ? sdHttpContext
+        result.httpRequest = sdHttpRequest
+          ? sdHttpRequest
           : sdReq && sdRes
           ? collectHttpContext(sdReq, sdRes)
           : undefined
