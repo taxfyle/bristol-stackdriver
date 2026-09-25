@@ -116,6 +116,11 @@ export interface FormatResult {
   file: string
   line: string
   severity: string
+
+  // Trace keys are special
+  'logging.googleapis.com/trace'?: string
+  'logging.googleapis.com/spanId'?: string
+  'logging.googleapis.com/trace_sampled'?: boolean
 }
 
 /**

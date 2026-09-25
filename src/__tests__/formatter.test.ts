@@ -33,6 +33,19 @@ describe('formatter', () => {
     expect(result.labels).toEqual({ label: 'value' })
   })
 
+  it('special-cases sd:trace', async () => {
+    const result = await getFormatResult('info', 'Hello', {
+      a: 1,
+      b: 2,
+      'sd:traceId': 'trace-1',
+      'sd:spanId': 'span-1'
+    })
+
+    expect(result['logging.googleapis.com/trace']).toBe('trace-1')
+    expect(result['logging.googleapis.com/spanId']).toBe('span-1')
+    expect(result['logging.googleapis.com/trace_sampled']).toBe(false)
+  })
+
   it('special-cases errors', async () => {
     const result = await getFormatResult(
       'info',

@@ -6,6 +6,9 @@ export const SD_HTTP_CONTEXT_KEY = 'sd:httpContext'
 export const SD_HTTP_REQ_KEY = 'sd:req'
 export const SD_HTTP_RES_KEY = 'sd:res'
 export const SD_USER_KEY = 'sd:user'
+export const SD_TRACE_ID_KEY = 'sd:traceId'
+export const SD_SPAN_ID_KEY = 'sd:spanId'
+export const SD_TRACE_SAMPLED_KEY = 'sd:traceSampled'
 
 /**
  * Bristol formatter for Stackdriver.
@@ -31,7 +34,7 @@ export function formatter() {
     const len = elems.length
     for (let idx = 0; idx < len; idx++) {
       const element = elems[idx]
-      // Last element is the aggregate obbject.
+      // Last element is the aggregate object.
       if (idx === len - 1) {
         const { file, line, ...rest } = element
 
@@ -46,6 +49,12 @@ export function formatter() {
         delete rest[SD_HTTP_REQ_KEY]
         const sdRes = rest[SD_HTTP_RES_KEY]
         delete rest[SD_HTTP_RES_KEY]
+        const sdTraceId = rest[SD_TRACE_ID_KEY]
+        delete rest[SD_TRACE_ID_KEY]
+        const sdSpanId = rest[SD_SPAN_ID_KEY]
+        delete rest[SD_SPAN_ID_KEY]
+        const sdTraceSampled = rest[SD_TRACE_SAMPLED_KEY]
+        delete rest[SD_TRACE_SAMPLED_KEY]
 
         Object.assign(payload, rest)
         Object.assign(labels, sdLabels)
@@ -57,6 +66,13 @@ export function formatter() {
         result.user = sdUser
         result.file = file
         result.line = line
+        result['logging.googleapis.com/trace'] = sdTraceId
+        result['logging.googleapis.com/spanId'] = sdSpanId
+        if (sdTraceId) {
+          result['logging.googleapis.com/trace_sampled'] = Boolean(
+            sdTraceSampled
+          )
+        }
       } else if (element === undefined) {
         msgElements.push('<undefined>')
       } else if (element instanceof Error) {
