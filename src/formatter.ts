@@ -25,9 +25,11 @@ export function formatter() {
     const result: FormatResult = {
       payload,
       labels,
-      file: '',
-      line: '',
-      severity: severity
+      severity: severity,
+      'logging.googleapis.com/sourceLocation': {
+        file: '',
+        line: ''
+      }
     }
 
     let msgElements: Array<string> = []
@@ -64,8 +66,7 @@ export function formatter() {
           ? collectHttpContext(sdReq, sdRes)
           : undefined
         result.user = sdUser
-        result.file = file
-        result.line = line
+        result['logging.googleapis.com/sourceLocation'] = { file, line }
         result['logging.googleapis.com/trace'] = sdTraceId
         result['logging.googleapis.com/spanId'] = sdSpanId
         if (sdTraceId) {

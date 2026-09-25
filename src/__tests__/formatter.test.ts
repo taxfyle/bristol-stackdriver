@@ -16,8 +16,10 @@ describe('formatter', () => {
       /abc/i
     )
 
-    expect(result.file).toContain('__tests__')
-    expect(result.line).toMatch(/\d*/)
+    expect(result['logging.googleapis.com/sourceLocation'].file).toContain(
+      '__tests__'
+    )
+    expect(result['logging.googleapis.com/sourceLocation'].line).toMatch(/\d*/)
     expect(result.payload).toEqual({ a: 1, b: 2 })
     expect(result.message).toBe('Hello world 123 <undefined>')
   })

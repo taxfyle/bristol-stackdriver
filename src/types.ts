@@ -113,14 +113,16 @@ export interface FormatResult {
   labels: StackdriverLabels
   httpContext?: StackdriverHttpContext
   user?: string
-  file: string
-  line: string
   severity: string
-
-  // Trace keys are special
   'logging.googleapis.com/trace'?: string
   'logging.googleapis.com/spanId'?: string
   'logging.googleapis.com/trace_sampled'?: boolean
+  'logging.googleapis.com/sourceLocation': LogSourceLocation
+}
+
+export interface LogSourceLocation {
+  file: string
+  line: string
 }
 
 /**
