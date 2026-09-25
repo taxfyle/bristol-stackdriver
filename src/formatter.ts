@@ -21,15 +21,14 @@ export function formatter() {
     elems: Array<any>
   ): FormatResult {
     const payload: any = {}
-    const labels = {}
     const result: FormatResult = {
       payload,
-      labels,
       severity: severity,
       'logging.googleapis.com/sourceLocation': {
         file: '',
         line: ''
-      }
+      },
+      'logging.googleapis.com/labels': {}
     }
 
     let msgElements: Array<string> = []
@@ -59,13 +58,14 @@ export function formatter() {
         delete rest[SD_TRACE_SAMPLED_KEY]
 
         Object.assign(payload, rest)
-        Object.assign(labels, sdLabels)
         result.httpContext = sdHttpContext
           ? sdHttpContext
           : sdReq && sdRes
           ? collectHttpContext(sdReq, sdRes)
           : undefined
         result.user = sdUser
+
+        result['logging.googleapis.com/labels'] = Object.assign({}, sdLabels)
         result['logging.googleapis.com/sourceLocation'] = { file, line }
         result['logging.googleapis.com/trace'] = sdTraceId
         result['logging.googleapis.com/spanId'] = sdSpanId

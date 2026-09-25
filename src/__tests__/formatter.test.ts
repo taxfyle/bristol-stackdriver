@@ -32,7 +32,7 @@ describe('formatter', () => {
     })
 
     expect(result.payload).toEqual({ a: 1, b: 2 })
-    expect(result.labels).toEqual({ label: 'value' })
+    expect(result['logging.googleapis.com/labels']).toEqual({ label: 'value' })
   })
 
   it('special-cases sd:trace', async () => {

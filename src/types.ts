@@ -110,7 +110,6 @@ export interface FormatResult {
   error?: Error
   message?: string
   payload: any
-  labels: StackdriverLabels
   httpContext?: StackdriverHttpContext
   user?: string
   severity: string
@@ -118,6 +117,7 @@ export interface FormatResult {
   'logging.googleapis.com/spanId'?: string
   'logging.googleapis.com/trace_sampled'?: boolean
   'logging.googleapis.com/sourceLocation': LogSourceLocation
+  'logging.googleapis.com/labels': StackdriverLabels
 }
 
 export interface LogSourceLocation {
